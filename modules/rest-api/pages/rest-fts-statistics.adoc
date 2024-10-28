@@ -583,7 +583,6 @@ This statistic appears on the Server Web Console dashboard as *Search Docs*.
 
 | `BUCKET_NAME:INDEX_NAME:num_bytes_read_at_query_time`
 a| The total number of bytes read by all queries against the given Search index.
-//????
 
 | `BUCKET_NAME:INDEX_NAME:num_bytes_used_disk`
 a| The total number of bytes used on disk by the given Search index. 
