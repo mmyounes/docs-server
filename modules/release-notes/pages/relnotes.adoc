@@ -5,6 +5,8 @@
 
 include::partial$docs-server-7.6.4-release-note.adoc[]
 
+include::partial$docs-server-7.6.3-release-note.adoc[]
+
 include::partial$docs-server-7.6.2-release-note.adoc[]
 
 include::partial$docs-server-7.6.1-release-note.adoc[]
