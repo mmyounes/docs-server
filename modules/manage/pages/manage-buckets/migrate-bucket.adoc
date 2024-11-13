@@ -126,7 +126,7 @@ For example, you may see increased disk usage when moving from Couchstore to Mag
 
 === Prerequisites
 
-Perform the migration rollback operation from magma to couchstore by disabling buckets history retention where magma is the backend storage.
+Perform the migration rollback operation from magma to couchstore by deactivating buckets history retention where magma is the backend storage.
 
 Follow these steps to rollback storage from **magma** to **couchstore**:
 
