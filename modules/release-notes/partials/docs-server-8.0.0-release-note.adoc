@@ -18,12 +18,59 @@ This release contains the following fixes:
 ==== Storage Engine
 
 
+[#section-fixed-issues-800-XDCR]
+==== XDCR
+
+https://jira.issues.couchbase.com/browse/MB-61312[MB-61312]::
+XDCR connection pre-check now supports alternate addresses,
+DNS SRV and works identically to how XDCR remote cluster reference behaves.
+
+https://jira.issues.couchbase.com/browse/MB-61378[MB-61378]::
+If a replication is deleted when a backfill pipeline is running,
+there's a possibility that the stats related to the backfill pipeline will remain and not properly be deleted and reset to 0
+
+https://jira.issues.couchbase.com/browse/MB-61575[MB-61575]::
+When the target cluster performs a certificate rotation after a pre-check run,
+the subsequent pre-check call will fail due to its caching of the old certificates
+
+https://jira.issues.couchbase.com/browse/MB-61657[MB-61657]::
+XDCR on Non-KV nodes may have a goroutine stuck due to the lack of listeners on a service channel.
+
+https://jira.issues.couchbase.com/browse/MB-61949[MB-61949]::
+When none of the nodes in the remote reference DNS SRV entry is reachable,
+XDCR could be stuck working off of a stale list of nodes.
+Now, XDCR can re-bootstrap from the top DNS SRV entry
+
+https://jira.issues.couchbase.com/browse/MB-61976[MB-61976]::
+When connectivity errors that show up on the UI are corrected,
+the error may remain indefinitely even if the original connectivity issue has been repaired.
+This is fixed: errors on the UI will correctly disappear once connectivity issues have been solved.
+
+https://jira.issues.couchbase.com/browse/MB-61977[MB-61977]::
+After a rebalance is performed on the target cluster, following a topology change,
+XDCR will have an updated node list to keep track of the connectivity statuses of the target cluster nodes.
+
+https://jira.issues.couchbase.com/browse/MB-62092[MB-62092]::
+When a pipeline is unable to start, `Prometheus` metrics did not capture the errors and the error state. 
+Now, the `Prometheus` stats will correctly log the situation as in error as well as the error count.
+
+https://jira.issues.couchbase.com/browse/MB-62294[MB-62294]::
+Tombstones were not replicated if the binary filter is turned on. 
+This  has been fixed;  tombstones are now replicated properly.
+
+https://jira.issues.couchbase.com/browse/MB-63527[MB-63527]::
+XDCR dashboard on Source cluster now shows a UI alert
+when a pipeline is stuck due to EACCESS errors while writing to Target cluster.
+
+
 
 [#section-fixed-issues-800-query-service]
 ==== Query Service
 
 https://jira.issues.couchbase.com/browse/MB-63420[MB-63420]::
-A server panic when processing a request containing a composite aggregate with a reference to the source (e.g., `MAX([d.date, d][1])` — note the order and the array element access being within the aggregate) has been resolved.
+A server panic when processing a request containing a composite aggregate with a reference to the source (e.g.,
+`MAX([d.date, d][1])` —
+note the order and the array element access being within the aggregate) have been resolved.
 +
 The more common form, (e.g., `MAX([d.date, d])[1]` was not affected.
 

@@ -24,6 +24,11 @@ The `/pools/default/nodeServices` endpoint results now include the UUID and name
   "clusterName": "CouchbaseTestLab"
 ----
 
+[#section-new-feature-XDCR]
+=== XDCR
+https://jira.issues.couchbase.com/browse/MB-61048[MB-61048]::
+Once faulty remote cluster credentials are fixed, XDCR will now be able to more quickly restart replications that depend on the repaired references.
+
 [#section-new-feature-query-engine]
 === Query Engine
 
@@ -32,11 +37,20 @@ New to `8.0.0` is the ability to manipulate document extended attributes (xattrs
 +
 `INSERT` and `UPSERT` statement options may now include a “xattrs” object element detailing additions and changes to the xattrs (omissions do not delete xattrs).
 +
-The `UPDATE` statement now supports `SET` and `UNSET` of `meta().xattrs.{attribute} elements.`
+The `UPDATE` statement now supports `SET` and `UNSET` of `meta().xattrs.+{attribute}+ elements.`
 
-[#section-new-feature-vectot-search]
+[#section-new-feature-vector-search]
 === Vector Search
 
 * On x86 platforms, Vector Search now uses the processor's Advanced Vector Extensions 2 (AVX2) feature to improve performance.
 Because of this change,  Couchbase Server running on x86 platforms requires a processor that supports these AVX2 instructions.
 For more information, see xref:install:pre-install.adoc#vector_cpu_requirements[Vector Search CPU Requirements].
+
+[#section-new-feature-tools]
+=== Tools
+
+https://jira.issues.couchbase.com/browse/MB-61073[MB-61073]::
+It is now possible to change the plan used by a repository.
+The repository first needs to be paused, and then the plan can be changed,
+and the repository resumed, where it will now execute the tasks from its new plan.
+
