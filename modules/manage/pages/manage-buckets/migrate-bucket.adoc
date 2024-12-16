@@ -126,18 +126,18 @@ For example, you may see increased disk usage when moving from Couchstore to Mag
 
 === Prerequisites
 
-Perform the migration rollback operation from magma to couchstore by deactivating buckets history retention where magma is the backend storage.
+You can rollback a migration from Magma to Couchstore by deactivating the history retention on the buckets, where Magma is the backend storage.
 
-Follow these steps to rollback storage from **magma** to **couchstore**:
+Follow these steps to rollback storage from Magma to Couchstore:
 
-. Run the following command to deactivate the parameter historyRetentionCollectionDefault for all the collections within the bucket. 
+. Run the following command to deactivate the parameter `historyRetentionCollectionDefault` for all the collections within the bucket. 
 +
 [source,console]
 ----
 include::manage:example$migrate-bucket-storage-backend.sh[tag=prereq-rollbackstorage-param]
 ----
 +
-For more information, see the xref:rest-api:rest-bucket-create.adoc#historyretentioncollectiondefault[historyRetentionCollectionDefault] parameter details.
+For more information, see the xref:rest-api:rest-bucket-create.adoc#historyretentioncollectiondefault[`historyRetentionCollectionDefault`] parameter details.
 +
 . Run the following command for each existing collection to deactivate the associated history retention. 
 +
@@ -146,7 +146,9 @@ For more information, see the xref:rest-api:rest-bucket-create.adoc#historyreten
 include::manage:example$migrate-bucket-storage-backend.sh[tag=prereq-rollbackstorage-collection]
 ----
 +
-For more information about creating and editing collections, see xref:rest-api:creating-a-collection.adoc#description[description]
+For more information about creating and editing a collection, see xref:rest-api:creating-a-collection.adoc#description[Creating and Editing a Collection]
+
+=== Procedure
 
 You can roll back the migration by:
 
