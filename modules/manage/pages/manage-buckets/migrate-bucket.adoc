@@ -139,7 +139,7 @@ include::manage:example$migrate-bucket-storage-backend.sh[tag=prereq-rollbacksto
 +
 For more information, see the xref:rest-api:rest-bucket-create.adoc#historyretentioncollectiondefault[`historyRetentionCollectionDefault`] parameter details.
 +
-. Run the following command for each existing collection to deactivate the associated history retention on the bucket. 
+. Run the following command for each existing collections to deactivate the associated history retention on the bucket. 
 +
 [source,console]
 ----
