@@ -10,16 +10,49 @@ For detailed information on new features and enhancements, please see xref:intro
 
 This release contains the following fixes:
 
-[#section-fixed-issues-800-cluster-manager]
-==== Cluster Manager
+[#section-fixed-issuses-800-data-service]
 
+==== Data Service
 
-[#section-fixed-issues-800-storage-engine]
-==== Storage Engine
-
+https://jira.issues.couchbase.com/browse/MB-63946[MB-63946]::
+When using `mcstat` it is no longer possible to use `--json=pretty`.
+The request to pretty-print the JSON is ignored
++
+Users can use a pipe in conjunction with an external formatting tool such as `jq` to obtain formatted output:
++
+[source, shell]
+----
+./mcstat [options] --json [statgroup] | jq .
+----
 
 [#section-fixed-issues-800-XDCR]
 ==== XDCR
+
+https://jira.issues.couchbase.com/browse/MB-23798[MB-23798]::
+If users do not want the replication to be automatically deleted upon either source or bucket deletion and/or recreation,
+they can set the `skipReplSpecAutoGc` replication setting to true upon replication creation.
+In the situation that the replication would have been deleted, it will have been automatically paused instead,
+and a persistent UI error message is logged to be viewed.
+Users are expected to manually execute the recovery action by deleting the replication and re-creating a newer one, if necessary.
+
+https://jira.issues.couchbase.com/browse/MB-58809[MB-58809]::
+The Remote Cluster Service may be stuck and unable to update references modified by another node in the cluster.
++
+*Resolution:* Ensure the resync takes place if the remote cluster metadata is out of sync to prevent references from being stuck in a stale state.
+https://jira.issues.couchbase.com/browse/MB-60186[MB-60186]::
+XDCR shutdown may cause a deadlock between DCP nozzle and statsMgr, leading to stuck go-routines
+
+https://jira.issues.couchbase.com/browse/MB-60448[MB-60448]::
+When the  `goxdcr` process was killed in a paused replication state, `changes_left` were left as negative.
+
+https://jira.issues.couchbase.com/browse/MB-60674[MB-60674]::
+JSON documents with ending with whitespaces were considered as invalid and were not eligible for advanced filtering.
+
+https://jira.issues.couchbase.com/browse/MB-60920[MB-60920]::
+XDCR backfill pipeline could contain null tasks, leading to the unnecessary triggering of the backfill pipeline.
+
+https://jira.issues.couchbase.com/browse/MB-60992[MB-60992]::
+Replication deletion may become stuck and not complete due to BackfillMgr not starting properly.
 
 https://jira.issues.couchbase.com/browse/MB-61312[MB-61312]::
 XDCR connection pre-check now supports alternate addresses,
@@ -67,38 +100,17 @@ when a pipeline is stuck due to EACCESS errors while writing to Target cluster.
 [#section-fixed-issues-800-query-service]
 ==== Query Service
 
-https://jira.issues.couchbase.com/browse/MB-63420[MB-63420]::
-A server panic when processing a request containing a composite aggregate with a reference to the source (e.g.,
-`MAX([d.date, d][1])` —
-note the order and the array element access being within the aggregate) have been resolved.
-+
-The more common form, (e.g., `MAX([d.date, d])[1]` was not affected.
+https://jira.issues.couchbase.com/browse/MB-51623[MB-51623]::
+If the query uses a legacy `LOOK UP JOIN`, sub-paths can be missing.
+Expiration must get expiration through sub document API.
+However, in the case of `JOIN` it only gets this through the Fetch Phase on the right side of the query.
+This can cause expiration to be incorrectly returned as 0.
 
 
-https://jira.issues.couchbase.com/browse/MB-63518[MB-63518]::
-An issue occurs
-when setting `completed-stream-size` to 0 when it is already set to 0 via the admin REST API, but the API call did not complete.
-Thereafter, access to vital information was blocked. +
-The issue has now been resolved.
-Prior to this fix, the only way to rectify the situation was to restart the query process on the affected node(s).
+https://jira.issues.couchbase.com/browse/MB-51629[MB-51629]::
+ Large negative integers with 19 significant digits but still below the limits of 64-bit int storage were treated as floating point and thus were subject to precision loss.
+ 
 
-[#section-fixed-issues-800-index-service]
-==== Index Service
-
-
-
-[#section-fixed-issues-800-anaytics-service]
-==== Analytics Service
-
-
-
-[#section-known-issues-800]
-=== Known Issues
-
-This release contains the following known issues:
-
-[#section-known-issues-800-query-service]
-==== Query Service
 
 
 
