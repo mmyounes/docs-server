@@ -35,6 +35,14 @@ In the situation that the replication would have been deleted, it will have been
 and a persistent UI error message is logged to be viewed.
 Users are expected to manually execute the recovery action by deleting the replication and re-creating a newer one, if necessary.
 
+https://jira.issues.couchbase.com/browse/MB-55758[MB-55758]::
+*Issue:* In very rare situations, a document with a very large CAS could be inserted into a bucket.
+It would then be possible for XDCR to replicate this document with malformed CAS to other clusters.
++
+*Solution:*
+XDCR now has a built-in guardrail to prevent documents with malformed CAS beyond a certain drift threshold from being replicated
+and notifies the user if this situation occurs via UI and logs.
+
 https://jira.issues.couchbase.com/browse/MB-58809[MB-58809]::
 The Remote Cluster Service may be stuck and unable to update references modified by another node in the cluster.
 +
@@ -109,6 +117,18 @@ This can cause expiration to be incorrectly returned as 0.
 
 https://jira.issues.couchbase.com/browse/MB-51629[MB-51629]::
  Large negative integers with 19 significant digits but still below the limits of 64-bit int storage were treated as floating point and thus were subject to precision loss.
+ 
+[#section-fixed-issues-800-tools]
+
+==== Tools
+
+https://jira.issues.couchbase.com/browse/MB-60337[MB-60337]::
+Previously, it was possible to remove backups which would cause dependent incremental backups to become invalid if they depended on those deleted backups. With this release, such deletes are prevented by default, but can be overridden with the new --disable-safe-remove-check flag
+
+https://jira.issues.couchbase.com/browse/MB-60676[MB-60676]::
+When there are multiple backup service nodes in a cluster, we now prevent more than one job for a repo being run concurrently.
+Previously this could happen, even though it always results in one of the jobs failing.
+
  
 
 

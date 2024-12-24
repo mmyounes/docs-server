@@ -46,8 +46,28 @@ The `UPDATE` statement now supports `SET` and `UNSET` of `meta().xattrs.+{attrib
 Because of this change,  Couchbase Server running on x86 platforms requires a processor that supports these AVX2 instructions.
 For more information, see xref:install:pre-install.adoc#vector_cpu_requirements[Vector Search CPU Requirements].
 
+[#section-new-feature-index-service]
+=== Index Service
+
+https://jira.issues.couchbase.com/browse/MB-60953[MB-60953]::
+We have improved the creation of large replicated partitioned index definitions
+to create all replicas and partitions in the same iteration,
+rather than doing it asynchronously in the background.
+This leads to better utilization of DCP streams.
+
 [#section-new-feature-tools]
 === Tools
+
+https://jira.issues.couchbase.com/browse/MB-60337[MB-60337]::
+Previously,
+it was possible to remove backups which would cause dependent incremental backups
+to become invalid if they depended on those deleted backups.
+With this release, such deletes are prevented by default but can be overridden with the new `--disable-safe-remove-check` flag
+
+https://jira.issues.couchbase.com/browse/MB-60676[MB-60676]::
+When there are multiple backup service nodes in a cluster,
+we now prevent more than one job for a repo from being run concurrently.
+Previously this could happen, even though it always results in one of the jobs failing.
 
 https://jira.issues.couchbase.com/browse/MB-61073[MB-61073]::
 It is now possible to change the plan used by a repository.
