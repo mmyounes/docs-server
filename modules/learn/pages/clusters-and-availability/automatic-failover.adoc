@@ -87,7 +87,7 @@ The node-minimum for each service is provided in the following table:
 | Service | Nodes Required
 
 | Data
-| 3
+| 3 (starting 7.6, the data service can automatically failover using a min of 2 data nodes given that there is another node in the cluster that can act as an arbiter)
 
 | Query
 | 2
